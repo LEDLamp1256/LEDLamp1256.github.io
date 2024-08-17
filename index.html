@@ -40,19 +40,4 @@
         <a onclick="hideToggle('signup')" class = "text login">Don't have an account?</a>
         <a onclick="hideToggle('login')" style="display : none" class = "text signup">Have an account already?</a>
     </body>
-
-    <script>
-        //toggle visibility between sign in and signup
-        function hideToggle(name){
-            var x = document.getElementsByClassName("text");
-            for(var i of x){
-                if(i.classList.contains(name)){
-                    i.style.display = "block";
-                }
-                else{
-                    i.style.display = "none";
-                }
-            }
-        }
-    </script>
 </html>

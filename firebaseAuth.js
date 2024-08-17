@@ -104,4 +104,15 @@ signIn.addEventListener("click", (event) =>{
     })
 })
 
-
+//toggle visibility between sign in and signup
+function hideToggle(name){
+    var x = document.getElementsByClassName("text");
+    for(var i of x){
+        if(i.classList.contains(name)){
+            i.style.display = "block";
+        }
+        else{
+            i.style.display = "none";
+        }
+    }
+}
