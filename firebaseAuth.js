@@ -17,9 +17,8 @@ const firebaseConfig = {
   measurementId: "G-L86K9E75Q7"
 };
 
-// Initialize Firebase
+// Initialize Firebase, etc
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
 const db = getFirestore();
 
@@ -33,6 +32,8 @@ function showMessage(message, divId){
         messageDiv.style.opacity=0;
     }, 5000);
 }
+
+
 
 //sign up button for signing up
 const signUp = document.getElementById("btnSignup");

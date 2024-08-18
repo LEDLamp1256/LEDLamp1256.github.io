@@ -27,9 +27,11 @@ let currentDay = date.getDate();
 //month : 1-12
 let currentMonth = date.getMonth();
 
+//gets days left in month
 let daysLeft = calcDays(currentDay, currentMonth);
 document.getElementById("d").innerText = "Days left : " + String(daysLeft);
 
+//function for calculating days in month
 function calcDays(currDay, currMonth){
     if (currMonth == 1 || currMonth == 3 || currMonth == 5 || currMonth == 7 || currMonth == 8 || currMonth == 10 || currMonth == 12){
         return 31 - currDay;
@@ -44,6 +46,10 @@ function calcDays(currDay, currMonth){
         }
         return 29 - currDay;
     } 
+}
+
+if(localStorage.getItem("loggedInUserId") === null){
+    window.location.href = "index.html";
 }
 
 //gets initial values of income, food, bills, misc from database, and sets them to the value in 
@@ -107,6 +113,7 @@ budgetEnterButton.addEventListener("click", (event) => {
     //setting appropriate values of text boxes/fields
     document.getElementById("r").innerText = "Remaining Money : " + String(r - unpaid);
     document.getElementById("budget").innerText = "You can afford to spend : $" + String(Math.floor((r - unpaid)/daysLeft * 100) / 100) + " per day";
+    document.getElementById("budgetWeek").innerText = "Or, You can afford to spend : $" + String(Math.floor((r - unpaid)/(daysLeft / 7) * 100) / 100) + " per week";
 });
 
 //button to submit values on spending breakdown tab
