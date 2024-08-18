@@ -199,27 +199,8 @@ function drawChart(){
     chart.draw(data, options);
 }
 
-const spendingMenu = document.getElementById("spendingMenu");
-spendingMenu.addEventListener("click", (event) =>{
-    hideToggle("spendingMenu");
-})
 
-const budgetMenu = document.getElementById("budgetMenu");
-budgetMenu.addEventListener("click", (event) =>{
-    hideToggle("budgetMenu");
-})
 
-function hideToggle(name){
-    var x = document.getElementsByClassName("text");
-    for(var i of x){
-        if(i.classList.contains(name)){
-            i.style.display = "block";
-        }
-        else{
-            i.style.display = "none";
-        }
-    }
-}
 
 
 //initial drawChart to load a chart on file load
