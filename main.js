@@ -19,6 +19,12 @@ const firebaseConfig = {
     measurementId: "G-L86K9E75Q7"
   };
 
+//sends user to login screen if not logged in/no logged in userid
+if(localStorage.getItem("loggedInUserId") === null){
+    console.log("not logged in");
+    window.location.href = "index.html";
+}
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -32,13 +38,6 @@ let currentDay = date.getDate();
 let currentMonth = date.getMonth();
 //gets days left in month
 let daysLeft = calcDays(currentDay, currentMonth);
-
-
-
-//sends user to login screen if not logged in/no logged in userid
-if(localStorage.getItem("loggedInUserId") === null){
-    window.location.href = "index.html";
-}
 
 //gets initial values of income, food, bills, misc from database, and sets them to the value in 
 //each appropriate input box
