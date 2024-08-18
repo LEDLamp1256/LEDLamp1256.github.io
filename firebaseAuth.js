@@ -43,35 +43,43 @@ signUp.addEventListener("click", (event) => {
     //sets consts
     const email = document.getElementById("rEmail").value;
     const pass = document.getElementById("rPass").value;
-    
-    //creates user with said email and pass
-    createUserWithEmailAndPassword(auth, email, pass)
-    .then((userCredential) =>{
-        //sets basic information in database (email)
-        const user = userCredential.user;
-        const userData = {
-            email : email
-        };
-        showMessage("Account created", "signUpMessage");
-        const docRef = doc(db, "users", user.uid);
-        setDoc(docRef, userData)
-        .then(() =>{
-            //on successful creation refs to signin page
-            window.location.href="index.html";
+    const confirmPass = document.getElementById("confirmPass").value;
+    if(pass === confirmPass){
+        //creates user with said email and pass
+        createUserWithEmailAndPassword(auth, email, pass)
+        .then((userCredential) =>{
+            //sets basic information in database (email)
+            const user = userCredential.user;
+            const userData = {
+                email : email
+            };
+            showMessage("Account created", "signUpMessage");
+            const docRef = doc(db, "users", user.uid);
+            setDoc(docRef, userData)
+            .then(() =>{
+                //on successful creation refs to signin page
+                window.location.href="index.html";
+            })
+            .catch((error) =>{
+                console.error("error writing document", error)
+            })
         })
         .catch((error) =>{
-            console.error("error writing document", error)
+            const errorCode = error.code;
+            if(errorCode == "auth/email-already-in-use"){
+                showMessage("email address exists alr", "signUpMessage");
+            }
+            else{
+                showMessage("unable to create account", "signUpMessage");
+            }
         })
-    })
-    .catch((error) =>{
-        const errorCode = error.code;
-        if(errorCode == "auth/email-already-in-use"){
-            showMessage("email address exists alr", "signUpMessage");
-        }
-        else{
-            showMessage("unable to create account", "signUpMessage");
-        }
-    })
+    }
+    else{
+        document.getElementById("rPass").value = "";
+        document.getElementById("confirmPass").value = "";
+        showMessage("Passwords do not match. Retry", "signUpMessage");
+    }
+    
 })
 
 //sign in button for signing in
