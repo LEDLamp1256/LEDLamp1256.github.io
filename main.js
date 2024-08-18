@@ -88,12 +88,12 @@ onAuthStateChanged(auth, (user) => {
         .catch((error) => {
             console.log(error)
             console.log("error getting document");
-        })
+        });
     }
     else{
         console.log("user id not found in local data")
     }
-})
+});
 
 //button to submit values on budgeting tab
 const budgetEnterButton = document.getElementById("budgetEnterButton");
@@ -107,7 +107,7 @@ budgetEnterButton.addEventListener("click", (event) => {
     //setting appropriate values of text boxes/fields
     document.getElementById("r").innerText = "Remaining Money : " + String(r - unpaid);
     document.getElementById("budget").innerText = "You can afford to spend : $" + String(Math.floor((r - unpaid)/daysLeft * 100) / 100) + " per day";
-})
+});
 
 //button to submit values on spending breakdown tab
 const enterButton = document.getElementById("enterButton");
@@ -199,7 +199,15 @@ function drawChart(){
     chart.draw(data, options);
 }
 
+const spendingMenu = document.getElementById("spendingMenu");
+spendingMenu.addEventListener("click", (event) =>{
+    hideToggle("spendingMenu");
+})
 
+const budgetMenu = document.getElementById("budgetMenu");
+budgetMenu.addEventListener("click", (event) =>{
+    hideToggle("budgetMenu");
+})
 
 function hideToggle(name){
     var x = document.getElementsByClassName("text");
