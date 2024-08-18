@@ -100,6 +100,32 @@ signIn.addEventListener("click", (event) =>{
     })
 })
 
+const showPass = document.getElementById("showPass");
+const passText = document.getElementById("pass");
+showPass.addEventListener("click", (event) => {
+    if(passText.type === "password"){
+        passText.type = "text";
+    }
+    else{
+        passText.type = "password";
+    }
+})
+
+const signupShowPass = document.getElementById("signupShowPass");
+const signupPassText = document.getElementById("rPass");
+const signupConfirmPassText = document.getElementById("confirmPass");
+signupShowPass.addEventListener("click", (event) => {
+    if(signupPassText.type === "password"){
+        signupPassText.type = "text";
+        signupConfirmPassText.type = "text";
+    }
+    else{
+        signupPassText.type = "password";
+        signupConfirmPassText.type = "password";
+    }
+})
+
+
 //showing message function for logging in, logging out, errors, etc
 function showMessage(message, divId){
     var messageDiv = document.getElementById(divId);
