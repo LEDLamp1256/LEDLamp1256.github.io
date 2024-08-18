@@ -22,40 +22,26 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const currUserId = localStorage.getItem("loggedInUserId");
+const docRef = doc(db, "users", currUserId);
+
+//date stuff for budgeting tab
 let date = new Date();
 let currentDay = date.getDate();
 //month : 1-12
 let currentMonth = date.getMonth();
-
 //gets days left in month
 let daysLeft = calcDays(currentDay, currentMonth);
-document.getElementById("d").innerText = "Days left : " + String(daysLeft);
 
-//function for calculating days in month
-function calcDays(currDay, currMonth){
-    if (currMonth == 1 || currMonth == 3 || currMonth == 5 || currMonth == 7 || currMonth == 8 || currMonth == 10 || currMonth == 12){
-        return 31 - currDay;
-    }
-    if (currMonth == 4 || currMonth == 6 || currMonth == 9 || currMonth == 11){
-        return 30 - currDay;
-    }
-    if(currMonth == 2){
-        year = date.getFullYear();
-        if(year % 400 == 0 || ((year % 4 == 0) && (year % 100 != 0))){
-            return 28 - currDay;
-        }
-        return 29 - currDay;
-    } 
-}
 
+
+//sends user to login screen if not logged in/no logged in userid
 if(localStorage.getItem("loggedInUserId") === null){
     window.location.href = "index.html";
 }
 
 //gets initial values of income, food, bills, misc from database, and sets them to the value in 
 //each appropriate input box
-const currUserId = localStorage.getItem("loggedInUserId");
-const docRef = doc(db, "users", currUserId);
 let startSnap = await getDoc(docRef);
 if(startSnap.exists()){
     let initI = startSnap.data().totalIncome;
@@ -70,6 +56,7 @@ if(startSnap.exists()){
 else{
     console.log("init number error")
 }
+
 //sets numbers for income, food, bills, misc from values in input boxes for later use.
 let i = Number(document.getElementById("i").value);
 let f = Number(document.getElementById("f").value);
@@ -79,6 +66,7 @@ let m = Number(document.getElementById("m").value);
 //gets logged email to put at top left of screen
 onAuthStateChanged(auth, (user) => {
     if(currUserId){
+        //gets document ref with user id
         const docRef = doc(db, "users", currUserId);
         getDoc(docRef)
         .then((docSnap) => {
@@ -206,9 +194,25 @@ function drawChart(){
     chart.draw(data, options);
 }
 
+//function for calculating days in month
+function calcDays(currDay, currMonth){
+    if (currMonth == 1 || currMonth == 3 || currMonth == 5 || currMonth == 7 || currMonth == 8 || currMonth == 10 || currMonth == 12){
+        return 31 - currDay;
+    }
+    if (currMonth == 4 || currMonth == 6 || currMonth == 9 || currMonth == 11){
+        return 30 - currDay;
+    }
+    if(currMonth == 2){
+        year = date.getFullYear();
+        if(year % 400 == 0 || ((year % 4 == 0) && (year % 100 != 0))){
+            return 28 - currDay;
+        }
+        return 29 - currDay;
+    } 
+}
 
-
-
+//sets value of days left text box in budgeting screen
+document.getElementById("d").innerText = "Days left : " + String(daysLeft);
 
 //initial drawChart to load a chart on file load
 drawChart();

@@ -22,16 +22,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore();
 
-//showing message function for logging in, logging out, errors, etc
-function showMessage(message, divId){
-    var messageDiv = document.getElementById(divId);
-    messageDiv.style.display = "block";
-    messageDiv.innerHTML = message;
-    messageDiv.style.opacity = 1;
-    setTimeout(function(){
-        messageDiv.style.opacity=0;
-    }, 5000);
-}
+
 
 
 
@@ -112,3 +103,14 @@ signIn.addEventListener("click", (event) =>{
         }
     })
 })
+
+//showing message function for logging in, logging out, errors, etc
+function showMessage(message, divId){
+    var messageDiv = document.getElementById(divId);
+    messageDiv.style.display = "block";
+    messageDiv.innerHTML = message;
+    messageDiv.style.opacity = 1;
+    setTimeout(function(){
+        messageDiv.style.opacity=0;
+    }, 5000);
+}
