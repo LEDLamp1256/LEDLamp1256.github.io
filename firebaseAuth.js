@@ -137,12 +137,47 @@ function showMessage(message, divId){
     }, 5000);
 }
 
-const signInEmail = document.getElementById("email");
-signInEmail.addEventListener("click", (event) => {
-    signInEmail.value = "";
+const guestLogin = document.getElementById("guestLogin");
+guestLogin.addEventListener("click", (event) => {
+    signInWithEmailAndPassword(auth, "guest@gmail.com", "Password")
+    .then((userCredential) => {
+        showMessage("login is successful", "loginMessage");
+        const user = userCredential.user;
+        //sets user id in local storage
+        localStorage.setItem("loggedInUserId", user.uid);
+        //refs to main page
+        window.location.href = "main.html";
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        if(errorCode === "auth/invalid-credentials"){
+            showMessage("incorrect email/pass", loginMessage);
+        }
+        else{
+            showMessage("account doesnt exist", loginMessage);
+        }
+    });
 });
 
-const signInPass = document.getElementById("pass");
-signInPass.addEventListener("click", (event) => {
-    signInPass.value = "";
+const haveAccount = document.getElementById("haveAccount");
+haveAccount.addEventListener("click", (event) => {
+    hideToggle("login");
 });
+
+const dontHaveAccount = document.getElementById("dontHaveAccount");
+dontHaveAccount.addEventListener("click", (event) => {
+    hideToggle("signup");
+});
+
+//script for toggling visibility
+function hideToggle(name){
+    var x = document.getElementsByClassName("text");
+    for(var i of x){
+        if(i.classList.contains(name)){
+            i.style.display = "block";
+        }
+        else{
+            i.style.display = "none";
+        }
+    }
+}

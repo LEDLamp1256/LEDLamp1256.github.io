@@ -210,6 +210,30 @@ function calcDays(currDay, currMonth){
     } 
 }
 
+//menu buttons
+const spendingButton = document.getElementById("spendingButton");
+spendingButton.addEventListener("click", (event) => {
+    hideToggle("spending");
+});
+
+const budgetingButton = document.getElementById("budgetingButton");
+budgetingButton.addEventListener("click", (event) => {
+    hideToggle("budget");
+});
+
+//script for toggling visibility
+function hideToggle(name){
+    var x = document.getElementsByClassName("text");
+    for(var i of x){
+        if(i.classList.contains(name)){
+            i.style.display = "block";
+        }
+        else{
+            i.style.display = "none";
+        }
+    }
+}
+
 //sets value of days left text box in budgeting screen
 document.getElementById("d").innerText = "Days left : " + String(daysLeft);
 
