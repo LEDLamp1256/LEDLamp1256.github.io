@@ -100,6 +100,7 @@ signIn.addEventListener("click", (event) =>{
     })
 })
 
+//toggles password visibility on login page
 const showPass = document.getElementById("showPass");
 const passText = document.getElementById("pass");
 showPass.addEventListener("click", (event) => {
@@ -110,7 +111,7 @@ showPass.addEventListener("click", (event) => {
         passText.type = "password";
     }
 })
-
+//toggles password visibility on signup page
 const signupShowPass = document.getElementById("signupShowPass");
 const signupPassText = document.getElementById("rPass");
 const signupConfirmPassText = document.getElementById("confirmPass");
@@ -125,7 +126,6 @@ signupShowPass.addEventListener("click", (event) => {
     }
 })
 
-
 //showing message function for logging in, logging out, errors, etc
 function showMessage(message, divId){
     var messageDiv = document.getElementById(divId);
@@ -136,3 +136,13 @@ function showMessage(message, divId){
         messageDiv.style.opacity=0;
     }, 5000);
 }
+
+const signInEmail = document.getElementById("email");
+signInEmail.addEventListener("click", (event) => {
+    signInEmail.value = "";
+});
+
+const signInPass = document.getElementById("pass");
+signInPass.addEventListener("click", (event) => {
+    signInPass.value = "";
+});
