@@ -137,6 +137,7 @@ function showMessage(message, divId){
     }, 5000);
 }
 
+//code for guest login
 const guestLogin = document.getElementById("guestLogin");
 guestLogin.addEventListener("click", (event) => {
     signInWithEmailAndPassword(auth, "guest@gmail.com", "Password")
@@ -159,6 +160,7 @@ guestLogin.addEventListener("click", (event) => {
     });
 });
 
+//Hide Toggle buttons for have/dont have accounts
 const haveAccount = document.getElementById("haveAccount");
 haveAccount.addEventListener("click", (event) => {
     hideToggle("login");

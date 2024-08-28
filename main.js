@@ -47,10 +47,12 @@ if(startSnap.exists()){
     let initF = startSnap.data().food;
     let initB = startSnap.data().bills;
     let initM = startSnap.data().misc;
+    let initS = startSnap.data().savings;
     document.getElementById("i").value = initI;
     document.getElementById("f").value = initF;
     document.getElementById("b").value = initB;
     document.getElementById("m").value = initM;
+    document.getElementById("s").value = initS;
 }
 else{
     console.log("init number error")
@@ -61,6 +63,8 @@ let i = Number(document.getElementById("i").value);
 let f = Number(document.getElementById("f").value);
 let b = Number(document.getElementById("b").value);
 let m = Number(document.getElementById("m").value);
+let s = Number(document.getElementById("s").value);
+
 
 //gets logged email to put at top left of screen
 onAuthStateChanged(auth, (user) => {
@@ -94,8 +98,8 @@ budgetEnterButton.addEventListener("click", (event) => {
     //unpaid bills/dues etc
     let unpaid = Number(document.getElementById("u").value);
     var r = 0;
-    if((i - (f + b + m)) >= 0){
-        r = Number(i - (f + b + m));
+    if((i - (f + b + m + s)) >= 0){
+        r = Number(i - (f + b + m + s));
     }
     //setting appropriate values of text boxes/fields
     document.getElementById("r").innerText = "Remaining Money : " + String(r - unpaid);
@@ -114,12 +118,14 @@ enterButton.addEventListener("click", (event) => {
             f = Number(document.getElementById("f").value);
             b = Number(document.getElementById("b").value);
             m = Number(document.getElementById("m").value);
+            s = Number(document.getElementById("s").value);
             setDoc(docRef, {
                     email: docSnap.data().email,
                     totalIncome: i,
                     food: f,
                     bills: b,
-                    misc: m
+                    misc: m,
+                    savings: s
             });
             drawChart();
         }
@@ -142,12 +148,14 @@ logoutButton.addEventListener("click", (event) => {
             f = Number(document.getElementById("f").value);
             b = Number(document.getElementById("b").value);
             m = Number(document.getElementById("m").value);
+            s = Number(document.getElementById("s").value);
             setDoc(docRef, {
                     email: docSnap.data().email,
                     totalIncome: i,
                     food: f,
                     bills: b,
-                    misc: m
+                    misc: m,
+                    savings: s
             });
         }
         else{
@@ -168,29 +176,35 @@ logoutButton.addEventListener("click", (event) => {
 //draw chart function for google pichart maker
 function drawChart(){
     //catching negative numbers in the money that is left
-    var r = 0;
-    if((i - (f + b + m)) >= 0){
-        r = Number(i - (f + b + m));
+    if((f + b + m + s) <= i){
+        var r = 0;
+        if((i - (f + b + m + s)) >= 0){
+            r = Number(i - (f + b + m + s));
+        }
+        //setting array for google table making library
+        var data = google.visualization.arrayToDataTable([
+            ["Task", "Money Spent"],
+            ["Remaining", Number(r)],
+            ["Food", Number(f)],
+            ["Bills", Number(b)],
+            ["Savings", Number(s)],
+            ["Misc", Number(m)]
+        ]);
+
+        //can add additional options, title was all that is needed
+        var options = {
+            title: "Spending Breakdown",
+            backgroundColor: "#A3D6D6"
+        };
+
+        //creates chart object, google visualizer
+        var chart = new google.visualization.PieChart(document.getElementById("piChart"));
+
+        chart.draw(data, options);
     }
-    //setting array for google table making library
-    var data = google.visualization.arrayToDataTable([
-        ["Task", "Money Spent"],
-        ["Remaining", Number(r)],
-        ["Food", Number(f)],
-        ["Bills", Number(b)],
-        ["Misc", Number(m)]
-    ]);
-
-    //can add additional options, title was all that is needed
-    var options = {
-        title: "Spending Breakdown",
-        
-    };
-
-    //creates chart object, google visualizer
-    var chart = new google.visualization.PieChart(document.getElementById("piChart"));
-
-    chart.draw(data, options);
+    else{
+        console.log("error")
+    }
 }
 
 //function for calculating days in month
