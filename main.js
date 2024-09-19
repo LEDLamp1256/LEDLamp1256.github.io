@@ -41,36 +41,45 @@ let daysLeft = calcDays(currentDay, currentMonth);
 
 //gets initial values of income, food, bills, misc from database, and sets them to the value in 
 //each appropriate input box
+let categoryList = [{name:"Bills", id: 1, value: 0}, {name:"Food", id: 2, value: 0}, {name:"Savings", id: 3, value: 0}, {name:"Misc", id: 4, value: 0}];
 let startSnap = await getDoc(docRef);
 if(startSnap.exists()){
     let initI = startSnap.data().totalIncome;
-    let initF = startSnap.data().food;
-    let initB = startSnap.data().bills;
-    let initM = startSnap.data().misc;
-    let initS = startSnap.data().savings;
+    if(startSnap.data().categoryLists != null){
+        categoryList = startSnap.data().categoryLists;
+    };
+    //to trim, not sure if needed
     document.getElementById("i").value = initI;
-    document.getElementById("f").value = initF;
-    document.getElementById("b").value = initB;
-    document.getElementById("m").value = initM;
-    document.getElementById("s").value = initS;
 }
 else{
     console.log("init number error")
 }
 
 //sets numbers for income, food, bills, misc from values in input boxes for later use.
-let i = Number(document.getElementById("i").value);
-let f = Number(document.getElementById("f").value);
-let b = Number(document.getElementById("b").value);
-let m = Number(document.getElementById("m").value);
-let s = Number(document.getElementById("s").value);
+let inc = Number(document.getElementById("i").value);
 
+//update html with current categories
+function updateHtml(){
+    let categories = document.getElementById("categoryList");
+    let addedHtml = "";
+    // for(var i = 0; i < categoryList.length; i++){
+    //     let temp = document.getElementById(i);
+    //     addedHtml += "<li><label for=" + i.id +  "></label>" + i.name + ": <input type='number' id=" + i.id + " value= " + i.value + " name=" + i.name + "></li>";
+    //     // addedHtml += "<li><label for=" + i.id +  "></label>" + i.name + ": <input type='number' id=" + i.id + " value= " + i.value + " name=" + i.name + "></li>"
+    // };
+    // for(var i of categoryList){
+    //     if(!addedHtml.includes(i.name)){
+    //         addedHtml += "<li><label for=" + i.id +  "></label>" + i.name + ": <input type='number' id=" + i.id + " value= " + i.value + " name=" + i.name + "></li>";
+    //     }
+        
+    // };
+    categories.innerHTML = addedHtml;
+};
 
 //gets logged email to put at top left of screen
 onAuthStateChanged(auth, (user) => {
     if(currUserId){
         //gets document ref with user id
-        const docRef = doc(db, "users", currUserId);
         getDoc(docRef)
         .then((docSnap) => {
             if(docSnap.exists()){
@@ -98,8 +107,11 @@ budgetEnterButton.addEventListener("click", (event) => {
     //unpaid bills/dues etc
     let unpaid = Number(document.getElementById("u").value);
     var r = 0;
-    if((i - (f + b + m + s)) >= 0){
-        r = Number(i - (f + b + m + s));
+    for(var i of categoryList){
+        inc -= i.value;
+    }
+    if(inc >= 0){
+        r = Number(inc);
     }
     //setting appropriate values of text boxes/fields
     document.getElementById("r").innerText = "Remaining Money : " + String(r - unpaid);
@@ -114,18 +126,12 @@ enterButton.addEventListener("click", (event) => {
     .then((docSnap) => {
         if(docSnap.exists()){
             //income, food, bills, misc, updating value based on the values in the appropriate input boxes
-            i = Number(document.getElementById("i").value);
-            f = Number(document.getElementById("f").value);
-            b = Number(document.getElementById("b").value);
-            m = Number(document.getElementById("m").value);
-            s = Number(document.getElementById("s").value);
+            inc = Number(document.getElementById("i").value);
+            updateHtml();
             setDoc(docRef, {
                     email: docSnap.data().email,
-                    totalIncome: i,
-                    food: f,
-                    bills: b,
-                    misc: m,
-                    savings: s
+                    totalIncome: inc,
+                    categoryLists: categoryList
             });
             drawChart();
         }
@@ -144,18 +150,12 @@ logoutButton.addEventListener("click", (event) => {
     .then((docSnap) => {
         if(docSnap.exists()){
             //income, food, bills, misc, updating value based on the values in the appropriate input boxes
-            i = Number(document.getElementById("i").value);
-            f = Number(document.getElementById("f").value);
-            b = Number(document.getElementById("b").value);
-            m = Number(document.getElementById("m").value);
-            s = Number(document.getElementById("s").value);
+            inc = Number(document.getElementById("i").value);
+            updateHtml();
             setDoc(docRef, {
                     email: docSnap.data().email,
-                    totalIncome: i,
-                    food: f,
-                    bills: b,
-                    misc: m,
-                    savings: s
+                    totalIncome: inc,
+                    categoryLists: categoryList
             });
         }
         else{
@@ -176,20 +176,25 @@ logoutButton.addEventListener("click", (event) => {
 //draw chart function for google pichart maker
 function drawChart(){
     //catching negative numbers in the money that is left
-    if((f + b + m + s) <= i){
+    let sum = 0;
+    for(var i of categoryList){
+        sum += i.value;
+    }
+    if(sum <= inc){
         var r = 0;
-        if((i - (f + b + m + s)) >= 0){
-            r = Number(i - (f + b + m + s));
+        if((inc - sum) >= 0){
+            r = Number(inc - sum);
         }
+
         //setting array for google table making library
+        var dataArray = [["Task", "Money Spent"]];
+        for(var i of categoryList){
+            dataArray.push([i.name, Number(i.value)]);
+        }
         var data = google.visualization.arrayToDataTable([
-            ["Task", "Money Spent"],
-            ["Remaining", Number(r)],
-            ["Food", Number(f)],
-            ["Bills", Number(b)],
-            ["Savings", Number(s)],
-            ["Misc", Number(m)]
+            dataArray
         ]);
+        
 
         //can add additional options, title was all that is needed
         var options = {
@@ -205,6 +210,22 @@ function drawChart(){
     else{
         console.log("error")
     }
+    getDoc(docRef)
+    .then((docSnap) => {
+        if(docSnap.exists()){
+            //income, food, bills, misc, updating value based on the values in the appropriate input boxes
+            inc = Number(document.getElementById("i").value);
+            updateHtml();
+            setDoc(docRef, {
+                    email: docSnap.data().email,
+                    totalIncome: inc,
+                    categoryLists: categoryList
+            });
+        }
+        else{
+            console.log("no document found matching id");
+        };
+    });
 }
 
 //function for calculating days in month
@@ -235,6 +256,23 @@ budgetingButton.addEventListener("click", (event) => {
     hideToggle("budget");
 });
 
+//adding category button
+const addButton = document.getElementById("addButton");
+addButton.addEventListener("click", (event) => {
+    for(var i of categoryList){
+        let tempId = i.id;
+        i.value = Number(document.getElementById(tempId).value);
+    };
+    categoryList.push({name: document.getElementById("addCategory").value, id: categoryList.length + 1, value: 0});
+    updateHtml();
+});
+
+const deleteButton = document.getElementById("deleteButton");
+deleteButton.addEventListener("click", (event) => {
+    categoryList.pop();
+    updateHtml();
+});
+
 //script for toggling visibility
 function hideToggle(name){
     var x = document.getElementsByClassName("text");
@@ -245,8 +283,34 @@ function hideToggle(name){
         else{
             i.style.display = "none";
         }
-    }
+    };
+};
+
+//adds check for email if user id is there but auth state not changed
+if(currUserId){
+    //gets document ref with user id
+    getDoc(docRef)
+    .then((docSnap) => {
+        if(docSnap.exists()){
+            //sets "email: " text at the top right
+            const userData = docSnap.data();
+            document.getElementById("loggedEmail").innerText = userData.email;
+        }
+        else{
+            console.log("no document found matching id");
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+        console.log("error getting document");
+    });
 }
+else{
+    console.log("user id not found in local data")
+}
+
+
+updateHtml();
 
 //sets value of days left text box in budgeting screen
 document.getElementById("d").innerText = "Days left : " + String(daysLeft);

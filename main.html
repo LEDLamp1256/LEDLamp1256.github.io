@@ -83,13 +83,19 @@
         <div class="text spending">
             <div style="display: inline-block">
                 <!--inputs and text for each different category: income, bills, food, misc-->
-                <ul class="spend">
-                    <li><label for="i"></label>Total Income/Month : <input type="number" id="i" name="income"></li>
-                    <li><label for="b"></label>Bills : <input type="number" id="b" name="bills"></li>
-                    <li><label for="f"></label>Food : <input type="number" id="f" name="food"></li>
-                    <li><label for="s"></label>Savings : <input type = "number" id="s" name = "savings"></li>
-                    <li><label for="m"></label>Miscellaneous : <input type="number" id="m" name="misc"></li>
-                    <button id="enterButton" type = "button">Enter</button>
+                <ul class="spend" style="display: block;margin:0px">
+                    <li><label for="i"></label>Total Income/Month: <input type="number" id="i" name="income"></li>
+                </ul>
+                <ul class="spend" id="categoryList" style="margin:0px">
+                    <li><label for="b"></label>Bills: <input type="number" id="b" name="bills"></li>
+                    <li><label for="f"></label>Food: <input type="number" id="f" name="food"></li>
+                    <li><label for="s"></label>Savings: <input type = "number" id="s" name = "savings"></li>
+                    <li><label for="m"></label>Misc: <input type="number" id="m" name="misc"></li>
+                </ul>
+                <ul class="spend" style="display:block;margin:0px">
+                    <button id="enterButton" type = "button">Enter</button><br>
+                    <li><label for="addCategory"></label>Category: <input type="text" id="addCategory" name="add"><button id="addButton" type = "button">Add</button></li> 
+                    <button id="deleteButton" type = "button">Delete Category</button>
                 </ul>
             </div>
             <!--pi chart location-->
