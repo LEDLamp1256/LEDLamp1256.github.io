@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <!--basic script importing and styles for google calendar-->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="module" src="main.js"></script>
+        <style>
+            *{
+                box-sizing: border-box;
+            }
+            html{
+                background-color: #A3D6D6;
+                margin: 0px;
+            }
+            body{
+                margin: 0px;
+                display: block;
+            }
+            .menu{
+                width: 50%;
+            }
+            .menu ul{
+                list-style-type: none;
+                background-color: gray;
+                overflow: hidden;
+                padding: 0px;
+                margin: 0px;
+
+            }
+            .menu a{
+                color: white;
+                text-decoration: none;
+                padding: 15px;
+                display: block;
+                text-align: center;
+            }
+            .menu a:hover{
+                background-color: darkgray;
+            }
+            .menu li{
+                border: 1px black solid;
+                width: 50%;
+                float: left;
+            }
+            .budget{
+                display: none;
+                font-size: 40px;
+            }
+            .spend{
+                display: inline-block;
+                font-size: 40px;
+            }
+            table, th, td{
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            #logout{
+                font-weight: bold;
+            }
+            #logout:hover{
+                text-decoration: underline;
+                color:blue;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <!--nav containing menu at the top of the screen-->
+        <nav class="menu">
+            <ul>
+                <!--toggle script to toggle visibility for each page-->
+                <li id = "spendingButton"><a>Spending Breakdown</a></li>
+                <li id = "budgetingButton"><a>Budgeting</a></li>
+            </ul>
+        </nav>
+        <!--current logged in email-->
+        <div>Email: <span id = "loggedEmail"></span></div>
+
+        <!--button for logging out and returning to login page-->
+        <button id = "logout">Logout</button>
+        
+        <!--div for spending breakdown portion of website -->
+        <div class="text spending">
+            <div style="display: inline-block">
+                <!--inputs and text for each different category: income, bills, food, misc-->
+                <ul class="spend" style="display: block;margin:0px">
+                    <li><label for="i"></label>Total Income/Month: <input type="number" id="i" name="income"></li>
+                </ul>
+                <ul class="spend" id="categoryListDiv" style="margin:0px">
+                    <li><label for="b"></label>Bills: <input type="number" id=1 name="bills"></li>
+                    <li><label for="f"></label>Food: <input type="number" id=2 name="food"></li>
+                    <li><label for="s"></label>Savings: <input type = "number" id=3 name = "savings"></li>
+                    <li><label for="m"></label>Misc: <input type="number" id=4 name="misc"></li>
+                </ul>
+                <ul class="spend" style="display:block;margin:0px">
+                    <button id="enterButton" type = "button">Enter</button><br>
+                    <li><label for="addCategory"></label>Category: <input type="text" id="addCategory" name="add"><button id="addButton" type = "button">Add</button></li> 
+                    <button id="deleteButton" type = "button">Delete Category</button>
+                </ul>
+            </div>
+            <!--pi chart location-->
+            <!--extra div is for styling things (it doesnt work when i take it out)-->
+            <div style="display: inline-block;position:relative;float:right;">
+                <div id = "piChart" style = "width: 800px; height: 300px"></div>
+            </div>
+        </div>
+
+        <!--div for affordability portion of website (WIP)-->
+        <div class="text budget" >
+            <div>
+                <ul>
+                    <!--r : remaining money, d : days left, u : unpaid dues-->
+                    <li id = "d">Days Left : </li>
+                    <li><label for="u"></label>Unpaid Dues : <input type="number" id="u" name="misc" style = "display: inline-block" value = "0"></li>
+                    <li id = "r">Remaining Money : </li>
+                    <button id="budgetEnterButton" type = "button">Enter</button>
+                </ul>
+            </div>
+            <div>
+                <p class="text budget" id = "budget">You can afford to spend : $</p>
+                <p class="text budget" id = "budgetWeek">Or, you can afford to spend : $</p>
+            </div>
+        </div>
+    </body>
+</html>

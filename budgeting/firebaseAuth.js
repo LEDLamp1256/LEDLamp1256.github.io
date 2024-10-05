@@ -45,7 +45,7 @@ signUp.addEventListener("click", (event) => {
             setDoc(docRef, userData)
             .then(() =>{
                 //on successful creation refs to signin page
-                window.location.href="index.html";
+                window.location.href="budgetingIndex.html";
             })
             .catch((error) =>{
                 console.error("error writing document", error)
@@ -158,6 +158,11 @@ guestLogin.addEventListener("click", (event) => {
             showMessage("account doesnt exist", loginMessage);
         }
     });
+});
+
+const returnButton = document.getElementById("returnButton");
+returnButton.addEventListener("click", (event) => {
+    window.location.href = "../index.html";
 });
 
 //Hide Toggle buttons for have/dont have accounts

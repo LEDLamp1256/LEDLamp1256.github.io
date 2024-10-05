@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--basic script importing and styles-->
+        <style>
+            html{
+                background-color: #A3D6D6;
+            }
+            .messageDiv{
+                background-color: purple;
+                color: white;
+                padding: 10px 20px;
+                margin: 10px;
+                border-radius: 5px;
+                font-size: 1rem;
+                opacity: 0;
+                animation: fadeOut 7s forwards;
+            }
+        </style>
+        <script type="module" src="firebaseAuth.js"></script>
+    </head>
+    <body>
+        <button id = "returnButton" type = "button">Return to Portfolio</button>
+        <h1>LOGIN</h1>
+        <!--basic form for login-->
+        <form class = "text login">
+            <div id="loginMessage" class = "messageDiv" style = "display : none"></div>
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" autocomplete="email"><br><br>
+            <label for="pass">Password:</label>
+            <input type="password" id="pass" name="password" style = "display: inline-block;" autocomplete="current-password">
+            <button id = "showPass" style = "display: inline-block;" type = "button">Show Password</button><br>
+            <button id = "btnLogin" type = "button">Submit</button> <br><br>
+            <button type = "button" id = "dontHaveAccount">Don't have an account?</button> <br><br>
+            <button id = "guestLogin" type = "button">Guest Login</button>
+        </form>
+        
+        <!--basic for for sign up-->
+        <form class = "text signup" style = "display : none">
+            <div id="signUpMessage" class = "messageDiv" style = "display : none"></div>
+            <label for="rEmail">Email:</label>
+            <input type="text" id="rEmail" name="email" autocomplete="email"><br><br>
+            <label for="rPass">Password:</label>
+            <input type="password" id="rPass" name="password" autocomplete="new-password"><br><br>
+            <label for="confirmPass">Re-Enter Password:</label>
+            <input type="password" id="confirmPass" name="password" style = "display: inline-block;" autocomplete="new-password">
+            <button id = "signupShowPass" style = "display: inline-block;" type = "button">Show Password</button><br>
+            <button id = "btnSignup" type = "button">Create Account</button><br><br>
+            <button type = "button" id = "haveAccount">Have an account already?</button>
+        </form>
+    </body>
+</html>
