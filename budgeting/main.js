@@ -317,4 +317,4 @@ updateHtml();
 document.getElementById("d").innerText = "Days left : " + String(daysLeft);
 
 //initial drawChart to load a chart on file load
-// drawChart();
+drawChart();
