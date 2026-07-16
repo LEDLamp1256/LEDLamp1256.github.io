@@ -49,7 +49,7 @@ export interface ResumeData {
 }
 
 export const resume: ResumeData = {
-  name: "Dylan lee",
+  name: "Dylan Lee",
   title: "Computer Engineering Student",
   availability: "open",
   availabilityLabel: "Open to Internships",
