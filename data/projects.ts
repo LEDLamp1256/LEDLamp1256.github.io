@@ -55,6 +55,24 @@ export const projects: Project[] = [
     },
   },
   {
+    id: "job-auto-fill-agent",
+    title: "Job Auto Fill Agent",
+    status: "active",
+    impact:
+      "Engineered a multi-stage autonomous web crawler (soon) and data injection designed to eliminate repetitive resume applications and web-form workflow. Local LLM inference and context to understand raw web forms semantically.",
+    techStack: ["Python", "Playwright", "Ollama", "LLama 3.1"],
+    engineeringEdge: {
+      type: "diagram",
+      label: "Architecture Diagram",
+      caption:
+        "Scraper → AI Matches form field from config.json → LLM Response is injected into the page.",
+      imageSrc: "/projects/job-auto-fill-agent/visual.png"
+    },
+    links: {
+      repo: "https://github.com/LEDLamp1256/jobAutoFillAgent",
+    },
+  },
+  {
     id: "budgeting-web-app",
     title: "Budgeting Web Application",
     status: "active",
