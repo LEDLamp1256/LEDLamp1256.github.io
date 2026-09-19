@@ -23,7 +23,7 @@ export interface ExperienceEntry {
   bullets: string[];
 }
 
-export type SkillDomain = "languages" | "frontend" | "tools";
+export type SkillDomain = "languages" | "frameworkslibraries" | "toolstechnologies";
 
 export interface SkillGroup {
   domain: SkillDomain;
@@ -69,11 +69,11 @@ export const resume: ResumeData = {
       graduation: "June 2029",
       gpa: "3.6",
       coursework: [
-        "Object-Oriented Programming (C++)",
         "Data Structures & Algorithms",
+        "Object-Oriented Programming (C++)",
         "Computer Organization",
         "Foundations of Computer Science",
-        "Google AI Essentials"
+        "Analog & Digital Circuits and Systems"
       ],
     },
   ],
@@ -86,9 +86,10 @@ export const resume: ResumeData = {
       start: "Jun 2023",
       end: "Jul 2024",
       bullets: [
-        "Taught fundamental coding skills as well as basic object-oriented programming concepts in Python, Micro:bit, and Scratch",
-        "Developed customized lesson plans to engage students and foster critical thinking and creativity",
-        "Managed and motivated students to create original projects while practicing core programming skills",
+        "Mentored groups of up to 15 students ages 6–12 in programming and project development",
+        "Taught Python, Micro:bit, Scratch, and introductory object-oriented programming concepts",
+        "Developed individualized lessons to reinforce programming fundamentals, critical thinking, and creativity",
+        "Guided students in designing and building original programming projects"
       ],
     },
     {
@@ -99,8 +100,9 @@ export const resume: ResumeData = {
       start: "Oct 2022",
       end: "Aug 2023",
       bullets: [
-        "Supported the main coach by planning and coordinating practice activities",
-        "Provided 1 on 1 coaching to help students improve techniques",
+        "Taught fundamental judo techniques to developing students during group practices",
+        "Provided one-on-one coaching to help students improve technique and execution",
+        "Assisted the head coach in planning and coordinating practice activities",
       ],
     }
   ],
@@ -108,17 +110,17 @@ export const resume: ResumeData = {
     {
       domain: "languages",
       label: "Languages",
-      items: ["Python", "Java", "C++", "TypeScript", "JavaScript", "SQL", "HTML", "CSS"],
+      items: ["Python", "Swift", "C++", "Java",  "TypeScript", "JavaScript", "SQL", "HTML/CSS"],
     },
     {
-      domain: "frontend",
-      label: "Frontend Development",
-      items: ["Next.js", "React", "Tailwind CSS"],
+      domain: "frameworkslibraries",
+      label: "Frameworks & Libraries",
+      items: ["SwiftUI", "AVFoundation", "React", "Next.js", "Playwright"],
     },
     {
-      domain: "tools",
-      label: "Developer Tools & Infrastructure",
-      items: ["Git", "Firebase"],
+      domain: "toolstechnologies",
+      label: "Tools & Technologies",
+      items: ["Git", "Firebase", "Whisper", "Ollama", "Metal", "Vulkan"],
     }
   ],
 };

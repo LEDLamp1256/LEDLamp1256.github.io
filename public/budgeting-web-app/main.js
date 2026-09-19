@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-location-assign-relative-destination -- This standalone static app navigates between its own HTML files. */
+
 //todo: set default values on input boxes to be retrieved from database, add pichart
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
@@ -36,7 +38,7 @@ const docRef = doc(db, "users", currUserId);
 let date = new Date();
 let currentDay = date.getDate();
 //month : 1-12
-let currentMonth = date.getMonth();
+let currentMonth = date.getMonth() + 1;
 //gets days left in month
 let daysLeft = calcDays(currentDay, currentMonth);
 
@@ -69,32 +71,37 @@ let inc = Number(document.getElementById("i").value);
 //adding buttons adds to categoryList list, which then has to be drawn/updated at some point to reflect changes onto html
 function updateHtml(){
     let categories = document.getElementById("categoryListDiv");
-    let addedHtml = "";
+    let categoryItems = document.createDocumentFragment();
     let sum = 0;
     for(var i of categoryList){
         sum += Number(i.value);
     }
-    //update category list before:
-    for(var i of categoryList){
-        addedHtml += "<li><label for='label" + i.id + "'></label>" + i.name + ": <input type='number' id='" + i.id + "' value='" + i.value + "' name='" + i.name + "'></li>";
-    };
-    document.getElementById("r").innerHTML = "Remaining Money : " + Number(inc - sum);
-    categories.innerHTML = addedHtml;
-    //adds event listeners for value changes on each input field
-    //IMPORTANT: this must be "let", not "var" — var is function-scoped, so every
-    //listener created below would otherwise close over the SAME shared "i" and all
-    //end up pointing at the last category in the array once the loop finishes.
-    //That was the bug causing inputs to appear to "reset": every keystroke, in any
-    //box, was actually being written into the last category's value instead of its own.
+    // Build category controls with DOM APIs so saved category names remain text,
+    // rather than being interpreted as HTML when the list is redrawn.
     for(let i of categoryList){
-        document.getElementById(i.id).addEventListener("input", (event) => {
-            i.value = event.target.value;
+        const item = document.createElement("li");
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+
+        label.htmlFor = String(i.id);
+        label.textContent = i.name;
+        input.type = "number";
+        input.id = String(i.id);
+        input.value = i.value;
+        input.name = i.name;
+        input.addEventListener("input", () => {
+            i.value = input.value;
         });
+
+        item.append(label, ": ", input);
+        categoryItems.append(item);
     };
+    document.getElementById("r").textContent = "Remaining Money : " + Number(inc - sum);
+    categories.replaceChildren(categoryItems);
 };
 
 //gets logged email to put at top left of screen
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, () => {
     if(currUserId){
         //gets document ref with user id
         getDoc(docRef)
@@ -120,7 +127,7 @@ onAuthStateChanged(auth, (user) => {
 
 //button to submit values on budgeting tab
 const budgetEnterButton = document.getElementById("budgetEnterButton");
-budgetEnterButton.addEventListener("click", (event) => {
+budgetEnterButton.addEventListener("click", () => {
     //unpaid bills/dues etc
     let unpaid = Number(document.getElementById("u").value);
     let sum = 0;
@@ -135,7 +142,7 @@ budgetEnterButton.addEventListener("click", (event) => {
 
 //button to submit values on spending breakdown tab
 const enterButton = document.getElementById("enterButton");
-enterButton.addEventListener("click", (event) => {
+enterButton.addEventListener("click", () => {
     getDoc(docRef)
     .then((docSnap) => {
         if(docSnap.exists()){
@@ -158,7 +165,7 @@ enterButton.addEventListener("click", (event) => {
 
 //log out button
 const logoutButton = document.getElementById("logout");
-logoutButton.addEventListener("click", (event) => {
+logoutButton.addEventListener("click", () => {
     //first updates to database
     getDoc(docRef)
     .then((docSnap) => {
@@ -253,32 +260,32 @@ function calcDays(currDay, currMonth){
         //crash the whole script every February.
         let year = date.getFullYear();
         if(year % 400 == 0 || ((year % 4 == 0) && (year % 100 != 0))){
-            return 28 - currDay;
+            return 29 - currDay;
         }
-        return 29 - currDay;
+        return 28 - currDay;
     } 
 }
 
 //menu buttons
 const spendingButton = document.getElementById("spendingButton");
-spendingButton.addEventListener("click", (event) => {
+spendingButton.addEventListener("click", () => {
     hideToggle("spending");
 });
 const budgetingButton = document.getElementById("budgetingButton");
-budgetingButton.addEventListener("click", (event) => {
+budgetingButton.addEventListener("click", () => {
     hideToggle("budget");
 });
 
 //adding category button
 const addButton = document.getElementById("addButton");
-addButton.addEventListener("click", (event) => {
+addButton.addEventListener("click", () => {
     categoryList.push({name: document.getElementById("addCategory").value, id: categoryList.length + 1, value: 0});
     updateHtml();
 });
 
 //button for deleting categories
 const deleteButton = document.getElementById("deleteButton");
-deleteButton.addEventListener("click", (event) => {
+deleteButton.addEventListener("click", () => {
     categoryList.pop();
     updateHtml();
 });

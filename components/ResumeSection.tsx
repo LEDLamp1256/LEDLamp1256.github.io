@@ -5,6 +5,7 @@
 // Drop into app/page.tsx as <ResumeSection /> alongside your Projects section.
 
 import { resume, type AvailabilityStatus } from "@/data/resume";
+import type { CSSProperties, ReactNode } from "react";
 
 const STATUS_COPY: Record<AvailabilityStatus, { dot: string; label: string }> = {
   open: { dot: "bg-[var(--signal)]", label: "text-[var(--signal)]" },
@@ -25,13 +26,13 @@ export default function ResumeSection() {
           "--surface-raised": "#131a24",
           "--signal": "#5eead4",
           "--hairline": "rgba(148, 163, 184, 0.16)",
-        } as React.CSSProperties
+        } as CSSProperties
       }
     >
       <div className="mx-auto max-w-4xl">
         {/* Eyebrow */}
         <p className="mb-3 font-mono text-xs tracking-[0.25em] text-slate-500 uppercase">
-          Resume — Spec Sheet
+          Resume
         </p>
 
         {/* Nameplate header, datasheet-style */}
@@ -195,7 +196,7 @@ function SpecRow({
   last = false,
 }: {
   label: string;
-  children: React.ReactNode;
+  children: ReactNode;
   last?: boolean;
 }) {
   return (

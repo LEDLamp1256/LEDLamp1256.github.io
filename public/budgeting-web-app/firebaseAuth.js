@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-location-assign-relative-destination -- This standalone static app navigates between its own HTML files. */
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
@@ -92,10 +94,10 @@ signIn.addEventListener("click", (event) =>{
     .catch((error) => {
         const errorCode = error.code;
         if(errorCode === "auth/invalid-credentials"){
-            showMessage("incorrect email/pass", loginMessage);
+            showMessage("incorrect email/pass", "loginMessage");
         }
         else{
-            showMessage("account doesnt exist", loginMessage);
+            showMessage("account doesnt exist", "loginMessage");
         }
     })
 })
@@ -103,7 +105,7 @@ signIn.addEventListener("click", (event) =>{
 //toggles password visibility on login page
 const showPass = document.getElementById("showPass");
 const passText = document.getElementById("pass");
-showPass.addEventListener("click", (event) => {
+showPass.addEventListener("click", () => {
     if(passText.type === "password"){
         passText.type = "text";
     }
@@ -115,7 +117,7 @@ showPass.addEventListener("click", (event) => {
 const signupShowPass = document.getElementById("signupShowPass");
 const signupPassText = document.getElementById("rPass");
 const signupConfirmPassText = document.getElementById("confirmPass");
-signupShowPass.addEventListener("click", (event) => {
+signupShowPass.addEventListener("click", () => {
     if(signupPassText.type === "password"){
         signupPassText.type = "text";
         signupConfirmPassText.type = "text";
@@ -130,7 +132,7 @@ signupShowPass.addEventListener("click", (event) => {
 function showMessage(message, divId){
     var messageDiv = document.getElementById(divId);
     messageDiv.style.display = "block";
-    messageDiv.innerHTML = message;
+    messageDiv.textContent = message;
     messageDiv.style.opacity = 1;
     setTimeout(function(){
         messageDiv.style.opacity=0;
@@ -139,7 +141,7 @@ function showMessage(message, divId){
 
 //code for guest login
 const guestLogin = document.getElementById("guestLogin");
-guestLogin.addEventListener("click", (event) => {
+guestLogin.addEventListener("click", () => {
     signInWithEmailAndPassword(auth, "guest@gmail.com", "Password")
     .then((userCredential) => {
         showMessage("login is successful", "loginMessage");
@@ -152,27 +154,22 @@ guestLogin.addEventListener("click", (event) => {
     .catch((error) => {
         const errorCode = error.code;
         if(errorCode === "auth/invalid-credentials"){
-            showMessage("incorrect email/pass", loginMessage);
+            showMessage("incorrect email/pass", "loginMessage");
         }
         else{
-            showMessage("account doesnt exist", loginMessage);
+            showMessage("account doesnt exist", "loginMessage");
         }
     });
 });
 
-const returnButton = document.getElementById("returnButton");
-returnButton.addEventListener("click", (event) => {
-    window.location.href = "../index.html";
-});
-
 //Hide Toggle buttons for have/dont have accounts
 const haveAccount = document.getElementById("haveAccount");
-haveAccount.addEventListener("click", (event) => {
+haveAccount.addEventListener("click", () => {
     hideToggle("login");
 });
 
 const dontHaveAccount = document.getElementById("dontHaveAccount");
-dontHaveAccount.addEventListener("click", (event) => {
+dontHaveAccount.addEventListener("click", () => {
     hideToggle("signup");
 });
 
