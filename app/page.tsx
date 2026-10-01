@@ -5,14 +5,17 @@
 import { resume } from "@/data/resume";
 import ResumeSection from "@/components/ResumeSection";
 import ProjectsShowcase from "@/components/ProjectsShowcase";
+import SiteNav from "@/components/SiteNav";
 
 export default function Home() {
   return (
-    <main className="flex flex-col min-h-screen bg-[#0d1117] text-slate-200">
+    <main id="top" className="flex flex-col min-h-screen bg-[#0d1117] text-slate-200">
+      <SiteNav />
+
       {/* ---------- Hero ---------- */}
       <section
         id="hero"
-        className="flex min-h-screen flex-col justify-center px-6 py-20 md:px-10 scroll-mt-16"
+        className="flex min-h-[calc(100svh-3.5rem)] flex-col justify-center px-6 py-16 md:px-10"
       >
         <div className="mx-auto w-full max-w-4xl">
           <p className="mb-4 font-mono text-xs tracking-[0.25em] text-slate-500 uppercase">
@@ -27,11 +30,18 @@ export default function Home() {
             {resume.summary}
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center gap-4">
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <a
+              href="#projects"
+              className="inline-flex items-center gap-2 rounded-md bg-[#5eead4] px-5 py-3 text-sm font-medium text-[#0d1117] transition hover:bg-[#5eead4]/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5eead4]"
+            >
+              View Projects
+            </a>
+
             <a
               href={resume.resumePdfPath}
               download
-              className="inline-flex items-center gap-2 rounded-md bg-[#5eead4] px-5 py-3 text-sm font-medium text-[#0d1117] transition hover:bg-[#5eead4]/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5eead4]"
+              className="inline-flex items-center gap-2 rounded-md border border-white/15 px-5 py-3 text-sm font-medium text-slate-300 transition hover:border-white/30 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5eead4]"
             >
               Download Resume
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -43,13 +53,6 @@ export default function Home() {
                   strokeLinejoin="round"
                 />
               </svg>
-            </a>
-
-            <a
-              href="#projects"
-              className="inline-flex items-center gap-2 rounded-md border border-white/15 px-5 py-3 text-sm font-medium text-slate-300 transition hover:border-white/30 hover:text-white"
-            >
-              View Projects
             </a>
           </div>
         </div>

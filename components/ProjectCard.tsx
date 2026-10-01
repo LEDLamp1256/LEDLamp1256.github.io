@@ -14,10 +14,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <article
-      className={`flex h-full flex-col rounded-xl border p-5 transition-colors ${
+      className={`flex h-full flex-col rounded-xl border p-5 transition duration-200 ease-out ${
         isArchived
           ? "border-white/10 bg-white/[0.015] grayscale-[0.3]"
-          : "border-white/10 bg-white/[0.03] hover:border-cyan-400/30"
+          : "border-white/10 bg-white/[0.03] hover:border-cyan-400/30 motion-safe:hover:-translate-y-0.5"
       }`}
     >
       {/* Header */}
@@ -47,7 +47,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Engineering Edge slot — the visual proof-of-work for this project */}
-      <div className="mb-5">
+      <div className="mb-4">
         <EngineeringEdge edge={engineeringEdge} muted={isArchived} />
       </div>
 

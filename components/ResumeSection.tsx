@@ -19,7 +19,7 @@ export default function ResumeSection() {
   return (
     <section
       id="resume"
-      className="relative py-20 px-6 md:px-10 bg-[var(--surface)] text-slate-200"
+      className="relative py-14 px-6 md:py-16 md:px-10 bg-[var(--surface)] text-slate-200"
       style={
         {
           "--surface": "#0d1117",
@@ -31,12 +31,13 @@ export default function ResumeSection() {
     >
       <div className="mx-auto max-w-4xl">
         {/* Eyebrow */}
-        <p className="mb-3 font-mono text-xs tracking-[0.25em] text-slate-500 uppercase">
+        <p className="mb-4 flex items-center gap-3 font-mono text-xs tracking-[0.25em] text-slate-500 uppercase">
           Resume
+          <span className="h-px w-8 bg-[var(--signal)]/60" aria-hidden="true" />
         </p>
 
         {/* Nameplate header, datasheet-style */}
-        <div className="border border-[var(--hairline)] rounded-lg bg-[var(--surface-raised)] px-6 py-5 md:px-8 md:py-6 mb-10">
+        <div className="border border-[var(--hairline)] rounded-lg bg-[var(--surface-raised)] px-6 py-5 md:px-8 md:py-6 mb-4">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
             <div>
               <h2 className="font-mono text-2xl md:text-3xl font-semibold text-white tracking-tight">
@@ -48,7 +49,7 @@ export default function ResumeSection() {
             <div className="flex flex-col items-start md:items-end gap-2">
               <div className="flex items-center gap-2">
                 <span
-                  className={`h-2 w-2 rounded-full ${status.dot} animate-pulse`}
+                  className={`h-2 w-2 rounded-full ${status.dot} motion-safe:animate-pulse`}
                   aria-hidden="true"
                 />
                 <span className={`font-mono text-xs tracking-wide ${status.label}`}>
@@ -78,17 +79,17 @@ export default function ResumeSection() {
           {/* Link row */}
           <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 border-t border-[var(--hairline)] pt-4 font-mono text-xs text-slate-400">
             {resume.links.github && (
-              <a href={resume.links.github} className="hover:text-[var(--signal)] transition">
+              <a href={resume.links.github} className="rounded-sm transition-colors hover:text-[var(--signal)] focus-visible:text-[var(--signal)] focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-[var(--signal)]">
                 github ↗
               </a>
             )}
             {resume.links.linkedin && (
-              <a href={resume.links.linkedin} className="hover:text-[var(--signal)] transition">
+              <a href={resume.links.linkedin} className="rounded-sm transition-colors hover:text-[var(--signal)] focus-visible:text-[var(--signal)] focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-[var(--signal)]">
                 linkedin ↗
               </a>
             )}
             {resume.links.email && (
-              <a href={`mailto:${resume.links.email}`} className="hover:text-[var(--signal)] transition">
+              <a href={`mailto:${resume.links.email}`} className="rounded-sm transition-colors hover:text-[var(--signal)] focus-visible:text-[var(--signal)] focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-[var(--signal)]">
                 {resume.links.email}
               </a>
             )}
