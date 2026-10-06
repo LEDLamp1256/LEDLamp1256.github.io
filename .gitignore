@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# design tooling: local working state (screenshots, caches, previews, reports, local config)
+/.impeccable/
+# local design-context notes (not published)
+/PRODUCT.md

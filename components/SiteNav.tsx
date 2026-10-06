@@ -12,18 +12,18 @@ const NAV_LINKS = [
 ];
 
 const linkClass =
-  "rounded-sm text-slate-400 transition-colors hover:text-[#5eead4] focus-visible:text-[#5eead4] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#5eead4]";
+  "block rounded-sm py-2 text-slate-400 transition-colors hover:text-signal focus-visible:text-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal";
 
 export default function SiteNav() {
   return (
-    <header className="sticky top-0 z-50 border-b px-6 md:px-10 border-white/[0.06] bg-[#0d1117]/85 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 border-b px-6 md:px-10 border-white/[0.06] bg-background/85 backdrop-blur-sm">
       <nav
         aria-label="Primary"
         className="mx-auto flex h-14 w-full max-w-4xl items-center justify-between gap-4"
       >
         <a
           href="#top"
-          className="rounded-sm text-sm font-semibold tracking-tight text-white transition-colors hover:text-[#5eead4] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#5eead4]"
+          className="rounded-sm py-2 text-sm font-semibold tracking-tight text-white transition-colors hover:text-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
         >
           {resume.name}
         </a>
