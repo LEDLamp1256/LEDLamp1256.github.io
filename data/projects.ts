@@ -78,7 +78,7 @@ export const projects: Project[] = [
     status: "active",
     impact:
       "Engineered an AI-assisted job application agent that understands and fills web forms using Playwright and local LLM inference. Designed the workflow to handle varied form controls, recover from navigation errors, and flag uncertain responses for human review.",
-    techStack: ["Python", "Playwright", "Ollama", "LLama 3.1"],
+    techStack: ["Python", "Playwright", "Ollama", "Llama 3.1"],
     engineeringEdge: {
       type: "diagram",
       label: "Architecture Diagram",
